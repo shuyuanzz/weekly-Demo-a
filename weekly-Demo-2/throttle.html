@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .scroll {
+        width: 100%;
+        overflow: auto;
+        height: 2000px;
+        background-color: red;
+    }
+</style>
+
+<body>
+    <div class="scroll">
+
+    </div>
+</body>
+<script>
+       throttle = (fn, interval = 2000) => {
+        let firstTime = true;
+        let timer = null;
+        return (...args) => {
+            if (firstTime) {
+                fn.apply(this, args)
+                return firstTime = false;
+            }
+            if (timer) {
+                return
+            } else {
+                timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    timer = null;
+                    fn.apply(this, args);
+                }, interval)
+            }
+        }
+        fn = () => {
+            console.log('you are scrolling')
+        }
+    }
+    window.addEventListener('scroll', throttle(fn, 2000))
+</script>
+
+</html>
